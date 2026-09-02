@@ -22,7 +22,7 @@ def draw():
         screen.draw.text("Try Again", fontsize= 30, center=(400,500), color="Black")
     elif Game_complete:
         screen.draw.text("YOU WIN", fontsize= 70, center=CENTER, color="Blue")
-        screen.draw.text("Play again" fontsize= 35, center=(400,500), color="Black")
+        screen.draw.text("Play again", fontsize= 35, center=(400,500), color="Black")
     else:
         for i in item:
             i.draw()
@@ -30,10 +30,14 @@ def draw():
 def update():
     global item
     if len(item)==0:
-        item=make_item(current_level)
+        item=make_items(current_level)
 
 def make_items(number_of_extra_items):
-    pass
+    items_to_create = get_option_to_create(number_of_extra_items)
+    new_items = create_items(items_to_create)
+    layout_items(new_items)
+    animate_items(new_items)
+    return new_items 
 
 def get_option_to_create(number_of_extra_items):
     items_to_create = ["bag"]
@@ -76,7 +80,7 @@ def handle_game_complete():
         Game_complete=True
     else:
         current_level+=1
-        item=[]
+        items=[]
         animations=[]
 
 
@@ -91,7 +95,11 @@ def on_mouse_down(pos):
             
 
 def stop_animation(animations_to_stop):
-    pass
+    for animation in animations_to_stop:
+        if animation.running:
+            animation.stop()
+
+pgzrun.go()
 
 
 
